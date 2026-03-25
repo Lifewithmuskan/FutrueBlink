@@ -1,0 +1,40 @@
+body{background-color: #F1EFEC;
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
+.box{
+    background-color: #d4c9be54;
+    width: 600px;
+    height: 600px;
+    border-radius: 10px;
+    display: flex;
+      align-items: center;
+    justify-content: center;
+}
+.inputbox{
+    position: relative;
+    background-color: #123458;
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:10px;
+    padding-left: 40px;
+}
+#labeltext{
+    color: rgb(255, 255, 255);
+    font-family: cursive;
+    font-size: 20px;
+    
+}
+#submitbutton{
+ display: flex;
+ flex-direction: column;
+ background-color:rgb(248, 242, 235);
+ color: #123458;
+ border-radius: 5px;
+ border: black solid 2px;
+ height: 30px;
+ width: 100px;
+ font-size: 14px;
+}
