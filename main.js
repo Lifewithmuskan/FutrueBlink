@@ -70,9 +70,12 @@ app.post("/api/ask-ai", async (req, res) => {
 
   } catch (error) {
     console.log("ERROR:", error.response?.data || error.message);
-
+console.log("ERROR:", error.response?.data || error.message);
+console.log("API KEY:", process.env.OPENROUTER_API_KEY);
+     console.log("API KEY:", process.env.OPENROUTER_API_KEY);
     res.status(500).json({
       answer: "Server error ❌",
+      
     });
   }
 });
