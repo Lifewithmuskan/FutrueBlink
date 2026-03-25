@@ -41,35 +41,71 @@ app.get("/",(req,res)=>{
 // })
 
 
-app.post("/api/ask-ai",async(req,res)=>{
-    try {
-        const data=req.body.comments.trim();
-        const userquestion= await Query.create({question:data})
+app.post("/api/ask-ai", async (req, res) => {
+  try {
+    const data = req.body.comments.trim();
 
-        const response= await axios.post("https://openrouter.ai/api/v1/chat/completions",
-        {
-            // model: "google/gemma-3-4b-it:free",
-            model:"meta-llama/llama-3-8b-instruct",
-            messages:[{role:"user",content:data}]
+    const userquestion = await Query.create({ question: data });
+
+    const response = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "meta-llama/llama-3-8b-instruct",
+        messages: [{ role: "user", content: data }],
+      },
+      {
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
         },
-        {
-            headers:{
-                 "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": "http://localhost:3000",
-                    "X-Title": "My App"
-            }
-        }
-        );
-        const ans=response.data.choices[0].message.content;
-        userquestion.answer=ans;
-        await userquestion.save();
-        res.json({answer : ans});
-    } catch (error) {
-        console.log(error)
-    }
+      }
+    );
+
+    const ans = response.data.choices[0].message.content;
+
+    userquestion.answer = ans;
+    await userquestion.save();
+
+    res.json({ answer: ans });
+
+  } catch (error) {
+    console.log("ERROR:", error.response?.data || error.message);
+
+    res.status(500).json({
+      answer: "Server error ❌",
+    });
+  }
+});
+
+// app.post("/api/ask-ai",async(req,res)=>{
+//     try {
+//         const data=req.body.comments.trim();
+//         const userquestion= await Query.create({question:data})
+
+//         const response= await axios.post("https://openrouter.ai/api/v1/chat/completions",
+//         {
+//             // model: "google/gemma-3-4b-it:free",
+//             model:"meta-llama/llama-3-8b-instruct",
+//             messages:[{role:"user",content:data}]
+//         },
+//         {
+//             headers:{
+//                     "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+//                     "Content-Type": "application/json",
+//                     "HTTP-Referer": "http://localhost:3000",
+//                     "X-Title": "My App"
+//             }
+//         }
+//         );
+//         const ans=response.data.choices[0].message.content;
+//         userquestion.answer=ans;
+//         await userquestion.save();
+//         res.json({answer : ans});
+//     } catch (error) {
+//         console.log(error)
+//     }
  
-})
+// })
 
 app.post("/api/save", async (req, res) => {
     try {
