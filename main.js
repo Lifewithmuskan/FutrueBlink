@@ -17,12 +17,12 @@ dotenv.config();
 
 const db=connectDB();
 
-// app.get("/",(req,res)=>{
-//     // res.send("hello")
-//     // res.render("index")
-//     res.json()
+app.get("/",(req,res)=>{
+    res.send("hello running")
+    // // res.render("index")
+    // res.json()
 
-// })
+})
 
 // app.post("/ask",async(req,res)=>{
 //     try {
